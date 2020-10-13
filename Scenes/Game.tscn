@@ -7,8 +7,10 @@
 script = ExtResource( 1 )
 
 [node name="UI" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 360.0
+margin_bottom = 640.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -23,6 +25,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ChangeSpinButton" type="Button" parent="UI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -94.8749
+margin_top = -25.8749
+margin_right = -5.87494
+margin_bottom = -5.87488
+text = "Change Spin"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Planet" parent="." instance=ExtResource( 2 )]
 position = Vector2( 180, 320 )
 [connection signal="pressed" from="UI/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="UI/ChangeSpinButton" to="." method="_on_ChangeSpinButton_pressed"]
