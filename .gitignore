@@ -13,3 +13,4 @@ data_*/
 .vs/
 .vscode/settings.json
 .DS_STORE
+build/

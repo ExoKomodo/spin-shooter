@@ -41,9 +41,11 @@ namespace SpinShooter.Game
 			_planetController = GetNode<PlanetController>("Planet");
 		}
 
-		public override void _Process(float delta)
+		public override void _Input(InputEvent @event)
 		{
-			if (Input.IsActionJustPressed(GAME_SHOOT))
+			base._UnhandledInput(@event);
+
+			if (@event is InputEventScreenTouch touch && touch.Pressed)
 			{
 				_planetController?.Shoot(this);
 			}
