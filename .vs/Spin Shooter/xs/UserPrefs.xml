@@ -1,7 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scripts/Planet/PlanetController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scripts/Planet/BulletController.cs">
     <Files>
-      <File FileName="Scripts/Planet/PlanetController.cs" Line="1" Column="1" />
+      <File FileName="Scripts/Planet/PlanetController.cs" Line="39" Column="22" />
+      <File FileName="Scripts/Game/GameController.cs" Line="66" Column="1" />
+      <File FileName="Scripts/Planet/BulletController.cs" Line="45" Column="7" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -9,8 +11,9 @@
           <Node name="Spin Shooter" expanded="True">
             <Node name="Spin Shooter" expanded="True">
               <Node name="Scripts" expanded="True">
+                <Node name="Game" expanded="True" />
                 <Node name="Planet" expanded="True">
-                  <Node name="PlanetController.cs" selected="True" />
+                  <Node name="BulletController.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

@@ -6,6 +6,14 @@ namespace SpinShooter.Game
 {
 	public class GameController : Node2D
 	{
+		#region Public
+
+		#region Constants
+		public const string GAME_SHOOT = "game_shoot";
+		#endregion
+
+		#endregion
+
 		#region Private
 
 		#region Properties
@@ -35,10 +43,13 @@ namespace SpinShooter.Game
 
 		public override void _Process(float delta)
 		{
-			
+			if (Input.IsActionJustPressed(GAME_SHOOT))
+			{
+				_planetController?.Shoot(this);
+			}
 		}
 		#endregion
-		
+
 		#region Godot Signals
 		private void _on_ChangeSpinButton_pressed()
 		{
