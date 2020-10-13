@@ -5,6 +5,8 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
+NumberToSpawn = 2
+SpawnTime = 4.0
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0

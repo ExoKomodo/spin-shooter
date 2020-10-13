@@ -9,11 +9,13 @@ namespace SpinShooter.Planet
 
 		#region Constants
 		public const float MIN_SIZE = 10f;
-		public const float GUN_LENGTH = 25f;
-		public const float GUN_WIDTH = 10f;
 		#endregion
 
 		#region Properties
+		[Export]
+		public float GunLength = 15f;
+		[Export]
+		public float GunWidth = 5f;
 		[Export]
 		public float Size
 		{
@@ -58,14 +60,14 @@ namespace SpinShooter.Planet
 		private PackedScene _bulletScene { get; set; }
 		private CollisionShape2D _collisionShape { get; set; }
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
-		private Vector2 _gunPosition => new Vector2(_circleShape.Radius, -GUN_WIDTH / 2f);
-		private Vector2 _gunSize => new Vector2(GUN_LENGTH, GUN_WIDTH);
+		private Vector2 _gunPosition => new Vector2(_circleShape.Radius, -GunWidth / 2f);
+		private Vector2 _gunSize => new Vector2(GunLength, GunWidth);
 		private Vector2 _muzzlePosition
 		{
 			get
 			{
 				var muzzlePosition = _gunPosition;
-				muzzlePosition.x += GUN_LENGTH;
+				muzzlePosition.x += GunLength;
 				muzzlePosition.y = 0f;
 				return muzzlePosition.Rotated(Rotation);
 			}
