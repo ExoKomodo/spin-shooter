@@ -28,6 +28,8 @@ namespace SpinShooter.Enemies.Enemy
 		#region Private
 		
 		#region Properties
+		private CollisionShape2D _collisionShape { get; set; }
+		private RectangleShape2D _rectangleShape => _collisionShape?.Shape as RectangleShape2D;
 		private Vector2 _direction { get; set; }
 		#endregion
 		
@@ -37,8 +39,9 @@ namespace SpinShooter.Enemies.Enemy
 			// Enemy body
 			DrawRect(
 				new Rect2(
-					position: Vector2.Zero,
-					size: new Vector2(10f, 10f)
+					position: -_rectangleShape.Extents,
+					// Extents on shape are half extents
+					size: _rectangleShape.Extents * 2f
 				),
 				Color.Color8(255, 0, 255),
 				filled: true
@@ -48,6 +51,11 @@ namespace SpinShooter.Enemies.Enemy
 		private void MoveEnemy(float delta)
 		{
 			GlobalTranslate(_direction * Speed * delta);
+		}
+		
+		private void TakeDamage()
+		{
+			QueueFree();
 		}
 		#endregion
 		
@@ -63,11 +71,19 @@ namespace SpinShooter.Enemies.Enemy
 
 		public override void _Ready()
 		{
+			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
 		}
 
 		public override void _Process(float delta)
 		{
 			MoveEnemy(delta);
+		}
+		#endregion
+		
+		#region Godot Signals
+		private void _on_Body_area_entered(object area)
+		{
+			TakeDamage();
 		}
 		#endregion
 	}

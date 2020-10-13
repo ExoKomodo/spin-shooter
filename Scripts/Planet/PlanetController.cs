@@ -62,6 +62,7 @@ namespace SpinShooter.Planet
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
 		private Vector2 _gunPosition => new Vector2(_circleShape.Radius, -GunWidth / 2f);
 		private Vector2 _gunSize => new Vector2(GunLength, GunWidth);
+		private PackedScene _mainMenuScene { get; set; }
 		private Vector2 _muzzlePosition
 		{
 			get
@@ -101,6 +102,12 @@ namespace SpinShooter.Planet
 			{
 				throw new Exception("Bullet scene did not load correctly");
 			}
+
+			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu.tscn");
+			if (_mainMenuScene == null)
+			{
+				throw new Exception("Main Menu scene did not load correctly");
+			}
 		}
 
 		private void RotatePlanet(float delta)
@@ -108,6 +115,11 @@ namespace SpinShooter.Planet
 			Rotate(RotationSpeed * delta);
 		}
 
+		private void TakeDamage()
+		{
+			GetTree().ChangeSceneTo(_mainMenuScene);
+		}
+		
 		private void UpdateSize()
 		{
 			if (_circleShape is null)
@@ -138,6 +150,13 @@ namespace SpinShooter.Planet
 		public override void _Process(float delta)
 		{
 			RotatePlanet(delta);
+		}
+		#endregion
+		
+		#region Godot Signals
+		private void _on_Body_area_entered(object area)
+		{
+			TakeDamage();
 		}
 		#endregion
 	}

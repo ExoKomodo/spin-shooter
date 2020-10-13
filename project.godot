@@ -52,6 +52,12 @@ game_shoot={
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+2d_physics/layer_1="planet"
+2d_physics/layer_2="bullet"
+2d_physics/layer_3="enemy"
+
 [mono]
 
 debugger_agent/wait_for_debugger=true

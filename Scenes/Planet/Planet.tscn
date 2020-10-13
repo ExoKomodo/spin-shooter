@@ -8,8 +8,11 @@
 script = ExtResource( 1 )
 Size = 25.0
 RotationSpeed = 2.0
+GunLength = 5.0
 
 [node name="Body" type="Area2D" parent="."]
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 shape = SubResource( 1 )
+[connection signal="area_entered" from="Body" to="." method="_on_Body_area_entered"]
