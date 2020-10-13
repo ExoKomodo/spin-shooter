@@ -34,7 +34,7 @@ margin_bottom = 14.0
 text = "Spin Shooter"
 
 [node name="Buttons" type="VBoxContainer" parent="Background/VBoxContainer"]
-margin_top = 200.0
+margin_top = 18.0
 margin_right = 80.0
 margin_bottom = 78.0
 custom_constants/separation = 20
