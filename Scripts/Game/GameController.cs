@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using SpinShooter.Planet;
 
 namespace SpinShooter.Game
 {
@@ -9,6 +10,7 @@ namespace SpinShooter.Game
 
 		#region Properties
 		private PackedScene _mainMenuScene { get; set; }
+		private PlanetController _planetController { get; set; }
 		#endregion
 		
 		#region Member Methods
@@ -28,6 +30,7 @@ namespace SpinShooter.Game
 		public override void _Ready()
 		{
 			LoadScenes();
+			_planetController = GetNode<PlanetController>("Planet");
 		}
 
 		public override void _Process(float delta)
@@ -37,6 +40,11 @@ namespace SpinShooter.Game
 		#endregion
 		
 		#region Godot Signals
+		private void _on_ChangeSpinButton_pressed()
+		{
+			_planetController.RotationSpeed *= -1f;
+		}
+
 		private void _on_ExitButton_pressed()
 		{
 			GetTree().ChangeSceneTo(_mainMenuScene);
@@ -44,5 +52,3 @@ namespace SpinShooter.Game
 		#endregion
 	}
 }
-
-
