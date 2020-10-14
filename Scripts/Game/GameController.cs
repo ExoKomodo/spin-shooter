@@ -5,7 +5,7 @@ using SpinShooter.Planet;
 
 namespace SpinShooter.Game
 {
-	public class GameController : Node2D
+	public class GameController : Control
 	{
 		#region Public
 

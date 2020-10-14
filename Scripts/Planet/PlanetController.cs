@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using SpinShooter.Game;
 
 namespace SpinShooter.Planet
 {
@@ -36,10 +37,10 @@ namespace SpinShooter.Planet
 		#endregion
 
 		#region Member Methods
-		public void Shoot(Node2D parent)
+		public void Shoot(GameController game)
 		{
 			var bullet = _bulletScene.Instance() as BulletController;
-			parent.AddChild(bullet);
+			game.AddChild(bullet);
 
 			var bulletPosition = _muzzlePosition;
 			// Translate local position to global

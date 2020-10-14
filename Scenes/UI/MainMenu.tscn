@@ -3,51 +3,50 @@
 [ext_resource path="res://Scripts/UI/MainMenu/MainMenuController.cs" type="Script" id=1]
 
 [node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -180.0
+margin_top = -320.0
+margin_right = 180.0
+margin_bottom = 320.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="Panel" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -40.0
 margin_top = 100.0
 margin_right = 40.0
-margin_bottom = 40.0
+margin_bottom = 178.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Background/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 80.0
 margin_bottom = 14.0
 text = "Spin Shooter"
 
-[node name="Buttons" type="VBoxContainer" parent="Background/VBoxContainer"]
+[node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 18.0
 margin_right = 80.0
 margin_bottom = 78.0
 custom_constants/separation = 20
 
-[node name="StartButton" type="Button" parent="Background/VBoxContainer/Buttons"]
+[node name="StartButton" type="Button" parent="VBoxContainer/Buttons"]
 margin_right = 80.0
 margin_bottom = 20.0
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="Background/VBoxContainer/Buttons"]
+[node name="QuitButton" type="Button" parent="VBoxContainer/Buttons"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 60.0
 text = "Quit"
-[connection signal="pressed" from="Background/VBoxContainer/Buttons/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="Background/VBoxContainer/Buttons/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/QuitButton" to="." method="_on_QuitButton_pressed"]
