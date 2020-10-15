@@ -14,3 +14,4 @@ data_*/
 .vscode/settings.json
 .DS_STORE
 build/
+release.keystore
