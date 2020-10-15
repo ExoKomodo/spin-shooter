@@ -10,6 +10,7 @@ namespace SpinShooter.Planet
 
 		#region Constants
 		public const float MIN_FIRE_DELAY = 0.1f;
+		public const int MIN_NUMBER_OF_GUNS = 1;
 		public const float MIN_SIZE = 10f;
 		#endregion
 
@@ -21,28 +22,27 @@ namespace SpinShooter.Planet
 			get => _fireDelay;
 			set
 			{
-				if (value < MIN_FIRE_DELAY)
-				{
-					value = MIN_FIRE_DELAY;
-				}
-				_fireDelay = value;
+				_fireDelay = Mathf.Max(MIN_FIRE_DELAY, value);
 			}
 		}
 		[Export]
-		public float GunLength = 15f;
+		public float GunSize = 5f;
 		[Export]
-		public float GunWidth = 5f;
+		public int NumberOfGuns
+		{
+			get => _numberOfGuns;
+			set
+			{
+				_numberOfGuns = Math.Max(MIN_NUMBER_OF_GUNS, value);
+			}
+		}
 		[Export]
 		public float Size
 		{
 			get => _size;
 			set
 			{
-				if (value < MIN_SIZE)
-				{
-					value = MIN_SIZE;
-				}
-				_size = value;
+				_size = Mathf.Max(MIN_SIZE, value);
 				UpdateSize();
 			}
 		}
@@ -60,13 +60,10 @@ namespace SpinShooter.Planet
 			}
 
 			_elapsedShotTime = 0f;
-			var bullet = _bulletScene.Instance() as BulletController;
-			game.AddChild(bullet);
-
-			var bulletPosition = _muzzlePosition;
-			// Translate local position to global
-			bullet.GlobalPosition = bulletPosition + GlobalPosition;
-			bullet.Direction = _muzzlePosition.Normalized();
+			for (float phi = 0f; phi < Mathf.Tau; phi += _gunStep)
+			{
+				ShootGun(game, phi);
+			}
 		}
 		#endregion
 
@@ -77,22 +74,23 @@ namespace SpinShooter.Planet
 		#region Fields
 		private float _elapsedShotTime = 0f;
 		private float _fireDelay = MIN_FIRE_DELAY;
+		private int _numberOfGuns = 1;
 		private float _size = 10f;
 		#endregion
 
 		#region Properties
+		private Vector2 _baseGunPosition => new Vector2(_circleShape.Radius, 0f);
 		private PackedScene _bulletScene { get; set; }
 		private CollisionShape2D _collisionShape { get; set; }
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
-		private Vector2 _gunPosition => new Vector2(_circleShape.Radius, -GunWidth / 2f);
-		private Vector2 _gunSize => new Vector2(GunLength, GunWidth);
+		public float _gunStep => NumberOfGuns == 0 ? Mathf.Tau : Mathf.Tau / NumberOfGuns;
 		private PackedScene _mainMenuScene { get; set; }
 		private Vector2 _muzzlePosition
 		{
 			get
 			{
-				var muzzlePosition = _gunPosition;
-				muzzlePosition.x += GunLength;
+				var muzzlePosition = _baseGunPosition;
+				muzzlePosition.x += GunSize;
 				muzzlePosition.y = 0f;
 				return muzzlePosition.Rotated(Rotation);
 			}
@@ -100,23 +98,49 @@ namespace SpinShooter.Planet
 		#endregion
 
 		#region Member Methods
+		private Vector2 CalculateGunPosition(float phi)
+		{
+			return _baseGunPosition.Rotated(phi);
+		}
+
+		private Vector2 CalculateMuzzlePosition(float phi)
+		{
+			var muzzlePosition = _baseGunPosition;
+			muzzlePosition.x += GunSize;
+			muzzlePosition.y = 0f;
+			return muzzlePosition.Rotated(phi);
+		}
+
+		private void DrawBody()
+		{
+			DrawCircle(
+				position: Vector2.Zero,
+				radius: _circleShape.Radius,
+				color: Color.Color8(0, 255, 0)
+			);
+		}
+
+		private void DrawGun(float phi)
+		{
+			DrawCircle(
+				position: CalculateGunPosition(phi),
+				radius: GunSize,
+				color: Color.Color8(0, 0, 255)
+			);
+		}
+
+		private void DrawGuns()
+		{
+			for (float phi = 0; phi < Mathf.Tau; phi += _gunStep)
+			{
+				DrawGun(phi);
+			}
+		}
+		
 		private void DrawPlanet()
 		{
-			// Planet body
-			DrawCircle(
-				Vector2.Zero,
-				_circleShape.Radius,
-				Color.Color8(0, 255, 0)
-			);
-			// Planet gun
-			DrawRect(
-				new Rect2(
-					position: _gunPosition,
-					size: _gunSize
-				),
-				Color.Color8(0, 0, 255),
-				filled: true
-			);
+			DrawBody();
+			DrawGuns();
 		}
 
 		private void LoadScenes()
@@ -137,6 +161,17 @@ namespace SpinShooter.Planet
 		private void RotatePlanet(float delta)
 		{
 			Rotate(RotationSpeed * delta);
+		}
+
+		private void ShootGun(GameController game, float phi)
+		{
+			var bullet = _bulletScene.Instance() as BulletController;
+			game.AddChild(bullet);
+
+			var muzzlePosition = CalculateMuzzlePosition(phi + Rotation);
+			// Translate local position to global
+			bullet.GlobalPosition = muzzlePosition + GlobalPosition;
+			bullet.Direction = muzzlePosition.Normalized();
 		}
 
 		private void TakeDamage()
