@@ -9,10 +9,25 @@ namespace SpinShooter.Planet
 		#region Public
 
 		#region Constants
+		public const float MIN_FIRE_DELAY = 0.1f;
 		public const float MIN_SIZE = 10f;
 		#endregion
 
 		#region Properties
+		public bool CanShoot => _elapsedShotTime >= FireDelay;
+		[Export]
+		public float FireDelay
+		{
+			get => _fireDelay;
+			set
+			{
+				if (value < MIN_FIRE_DELAY)
+				{
+					value = MIN_FIRE_DELAY;
+				}
+				_fireDelay = value;
+			}
+		}
 		[Export]
 		public float GunLength = 15f;
 		[Export]
@@ -39,6 +54,12 @@ namespace SpinShooter.Planet
 		#region Member Methods
 		public void Shoot(GameController game)
 		{
+			if (!CanShoot)
+			{
+				return;
+			}
+
+			_elapsedShotTime = 0f;
 			var bullet = _bulletScene.Instance() as BulletController;
 			game.AddChild(bullet);
 
@@ -54,6 +75,8 @@ namespace SpinShooter.Planet
 		#region Private
 
 		#region Fields
+		private float _elapsedShotTime = 0f;
+		private float _fireDelay = MIN_FIRE_DELAY;
 		private float _size = 10f;
 		#endregion
 
@@ -143,6 +166,7 @@ namespace SpinShooter.Planet
 
 		public override void _Ready()
 		{
+			_elapsedShotTime = FireDelay;
 			LoadScenes();
 			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
 			UpdateSize();
@@ -150,6 +174,7 @@ namespace SpinShooter.Planet
 
 		public override void _Process(float delta)
 		{
+			_elapsedShotTime += delta;
 			RotatePlanet(delta);
 		}
 		#endregion
