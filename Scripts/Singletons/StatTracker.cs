@@ -11,6 +11,7 @@ namespace SpinShooter.Singletons
 		#region Public
 
 		#region Static Properties
+		public static UInt64 AvailableScore { get; private set; }
 		public static UInt64 RoundScore { get; private set; }
 		public static UInt64 TotalScore { get; private set; }
 		public static IDictionary<EnemyId, UInt64> EnemyKills { get; private set; }
@@ -22,11 +23,29 @@ namespace SpinShooter.Singletons
 			RoundScore += enemy.Score;
 			EnemyKills[enemy.Id]++;
 		}
+
+		public static bool Buy(UInt64 cost)
+		{
+			if (
+				!TryBuy(cost)
+				|| cost > AvailableScore
+			)
+			{
+				return false;
+			}
+			AvailableScore -= cost;
+			return true;
+		}
+
+		public static void Credit(UInt64 credit)
+		{
+			AvailableScore += credit;
+		}
 		
 		public static void EndRound()
 		{
 			CollateScores();
-			PersistScores();
+			// TODO: GooglePlay.Persist();
 			ResetRound();
 
 			GD.Print(TotalScore);
@@ -42,6 +61,11 @@ namespace SpinShooter.Singletons
 		{
 			ResetRound();
 		}
+
+		public static bool TryBuy(UInt64 cost)
+		{
+			return cost <= AvailableScore;
+		}
 		#endregion
 
 		#endregion
@@ -52,15 +76,7 @@ namespace SpinShooter.Singletons
 		private static void CollateScores()
 		{
 			TotalScore += RoundScore;
-		}
-
-		private static void PersistScores()
-		{
-			// TODO: Save new RoundScore?
-			
-			// TODO: Update TotalScore
-
-			// Update enemy scores
+			AvailableScore += RoundScore;
 		}
 
 		private static void ResetRound()

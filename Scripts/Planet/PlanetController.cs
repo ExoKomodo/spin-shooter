@@ -3,6 +3,7 @@ using System;
 using SpinShooter.Game;
 using SpinShooter.Planet.Guns;
 using System.Collections.Generic;
+using SpinShooter.Singletons;
 
 namespace SpinShooter.Planet
 {
@@ -132,6 +133,33 @@ namespace SpinShooter.Planet
 			}
 		}
 
+		private bool IsUpgradeActive(Upgrades.Upgrade upgrade)
+		{
+			return upgrade.IsPurchased && upgrade.IsEnabled;
+		}
+
+		private void LoadNumberOfGuns()
+		{
+			NumberOfGuns = MIN_NUMBER_OF_GUNS;
+			if (IsUpgradeActive(Upgrades.TwoGuns))
+			{
+				NumberOfGuns = 2;
+			}
+			if (IsUpgradeActive(Upgrades.ThreeGuns))
+			{
+				NumberOfGuns = 3;
+			}
+			if (IsUpgradeActive(Upgrades.FourGuns))
+			{
+				NumberOfGuns = 4;
+			}
+		}
+
+		private void LoadPlanet()
+		{
+			LoadNumberOfGuns();
+		}
+
 		private void LoadScenes()
 		{
 			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu.tscn");
@@ -185,6 +213,7 @@ namespace SpinShooter.Planet
 			LoadScenes();
 			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
 			UpdateSize();
+			LoadPlanet();
 			GenerateGuns();
 		}
 

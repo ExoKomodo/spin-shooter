@@ -35,7 +35,7 @@ text = "Spin Shooter"
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 18.0
 margin_right = 80.0
-margin_bottom = 78.0
+margin_bottom = 118.0
 custom_constants/separation = 20
 
 [node name="StartButton" type="Button" parent="VBoxContainer/Buttons"]
@@ -43,10 +43,17 @@ margin_right = 80.0
 margin_bottom = 20.0
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/Buttons"]
+[node name="UpgradeButton" type="Button" parent="VBoxContainer/Buttons"]
 margin_top = 40.0
 margin_right = 80.0
 margin_bottom = 60.0
+text = "Upgrades"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer/Buttons"]
+margin_top = 80.0
+margin_right = 80.0
+margin_bottom = 100.0
 text = "Quit"
 [connection signal="pressed" from="VBoxContainer/Buttons/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/UpgradeButton" to="." method="_on_UpgradeButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/QuitButton" to="." method="_on_QuitButton_pressed"]

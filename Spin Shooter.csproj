@@ -67,7 +67,9 @@
     <Compile Include="Scripts\Planet\Guns\Gun.cs" />
     <Compile Include="Scripts\Planet\PlanetController.cs" />
     <Compile Include="Scripts\Singletons\StatTracker.cs" />
+    <Compile Include="Scripts\Singletons\Upgrades.cs" />
     <Compile Include="Scripts\UI\MainMenu\MainMenuController.cs" />
+    <Compile Include="Scripts\UI\UpgradeMenu\UpgradeMenuController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

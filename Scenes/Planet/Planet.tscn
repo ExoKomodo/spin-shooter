@@ -7,7 +7,6 @@
 [node name="Planet" type="Node2D"]
 script = ExtResource( 1 )
 FireDelay = 0.75
-NumberOfGuns = 3
 Size = 25.0
 RotationSpeed = 2.0
 
