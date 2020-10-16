@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using SpinShooter.Game;
+using SpinShooter.Planet.Guns;
+using System.Collections.Generic;
 
 namespace SpinShooter.Planet
 {
@@ -60,9 +62,9 @@ namespace SpinShooter.Planet
 			}
 
 			_elapsedShotTime = 0f;
-			for (float phi = 0f; phi < Mathf.Tau; phi += _gunStep)
+			foreach (var gun in _guns)
 			{
-				ShootGun(game, phi);
+				gun.Shoot(game, Rotation);
 			}
 		}
 		#endregion
@@ -72,6 +74,7 @@ namespace SpinShooter.Planet
 		#region Private
 
 		#region Fields
+		private IList<Gun> _guns = new List<Gun>();
 		private float _elapsedShotTime = 0f;
 		private float _fireDelay = MIN_FIRE_DELAY;
 		private int _numberOfGuns = 1;
@@ -80,7 +83,6 @@ namespace SpinShooter.Planet
 
 		#region Properties
 		private Vector2 _baseGunPosition => new Vector2(_circleShape.Radius, 0f);
-		private PackedScene _bulletScene { get; set; }
 		private CollisionShape2D _collisionShape { get; set; }
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
 		public float _gunStep => NumberOfGuns == 0 ? Mathf.Tau : Mathf.Tau / NumberOfGuns;
@@ -98,19 +100,6 @@ namespace SpinShooter.Planet
 		#endregion
 
 		#region Member Methods
-		private Vector2 CalculateGunPosition(float phi)
-		{
-			return _baseGunPosition.Rotated(phi);
-		}
-
-		private Vector2 CalculateMuzzlePosition(float phi)
-		{
-			var muzzlePosition = _baseGunPosition;
-			muzzlePosition.x += GunSize;
-			muzzlePosition.y = 0f;
-			return muzzlePosition.Rotated(phi);
-		}
-
 		private void DrawBody()
 		{
 			DrawCircle(
@@ -119,38 +108,32 @@ namespace SpinShooter.Planet
 				color: Color.Color8(0, 255, 0)
 			);
 		}
-
-		private void DrawGun(float phi)
-		{
-			DrawCircle(
-				position: CalculateGunPosition(phi),
-				radius: GunSize,
-				color: Color.Color8(0, 0, 255)
-			);
-		}
-
-		private void DrawGuns()
-		{
-			for (float phi = 0; phi < Mathf.Tau; phi += _gunStep)
-			{
-				DrawGun(phi);
-			}
-		}
 		
 		private void DrawPlanet()
 		{
 			DrawBody();
-			DrawGuns();
+		}
+
+		private void GenerateGuns()
+		{
+			foreach (var gun in _guns)
+			{
+				gun.Destroy();
+			}
+			_guns.Clear();
+
+			var basicGunScene = BasicGun.GetScene();
+			for (float phi = 0; phi < Mathf.Tau; phi += _gunStep)
+			{
+				var gun = basicGunScene.Instance() as BasicGun;
+				gun.Initialize(_baseGunPosition, phi);
+				_guns.Add(gun);
+				AddChild(gun);
+			}
 		}
 
 		private void LoadScenes()
 		{
-			_bulletScene = GD.Load<PackedScene>("res://Scenes/Planet/Bullet.tscn");
-			if (_bulletScene == null)
-			{
-				throw new Exception("Bullet scene did not load correctly");
-			}
-
 			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu.tscn");
 			if (_mainMenuScene == null)
 			{
@@ -163,20 +146,17 @@ namespace SpinShooter.Planet
 			Rotate(RotationSpeed * delta);
 		}
 
-		private void ShootGun(GameController game, float phi)
-		{
-			var bullet = _bulletScene.Instance() as BulletController;
-			game.AddChild(bullet);
-
-			var muzzlePosition = CalculateMuzzlePosition(phi + Rotation);
-			// Translate local position to global
-			bullet.GlobalPosition = muzzlePosition + GlobalPosition;
-			bullet.Direction = muzzlePosition.Normalized();
-		}
-
 		private void TakeDamage()
 		{
 			GetTree().ChangeSceneTo(_mainMenuScene);
+		}
+
+		private void UpdateGuns()
+		{
+			foreach (var gun in _guns)
+			{
+				gun.BasePosition = _baseGunPosition;
+			}
 		}
 		
 		private void UpdateSize()
@@ -205,12 +185,14 @@ namespace SpinShooter.Planet
 			LoadScenes();
 			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
 			UpdateSize();
+			GenerateGuns();
 		}
 
 		public override void _Process(float delta)
 		{
 			_elapsedShotTime += delta;
 			RotatePlanet(delta);
+			UpdateGuns();
 		}
 		#endregion
 		

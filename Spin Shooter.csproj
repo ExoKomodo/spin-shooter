@@ -61,6 +61,8 @@
     <Compile Include="Scripts\Enemies\Enemy\EnemyController.cs" />
     <Compile Include="Scripts\Game\GameController.cs" />
     <Compile Include="Scripts\Planet\BulletController.cs" />
+    <Compile Include="Scripts\Planet\Guns\BasicGun.cs" />
+    <Compile Include="Scripts\Planet\Guns\Gun.cs" />
     <Compile Include="Scripts\Planet\PlanetController.cs" />
     <Compile Include="Scripts\UI\MainMenu\MainMenuController.cs" />
   </ItemGroup>
