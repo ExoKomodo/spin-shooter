@@ -47,6 +47,15 @@ namespace SpinShooter.Planet.Guns
 		#region Protected
 
 		#region Member Methods
+		protected override void Draw()
+		{
+			DrawCircle(
+				position: Vector2.Zero,
+				radius: GunSize,
+				color: Color.Color8(0, 0, 255)
+			);
+		}
+
 		protected override void LoadScenes()
 		{
 			base.LoadScenes();
@@ -85,15 +94,6 @@ namespace SpinShooter.Planet.Guns
 		#endregion
 
 		#region Godot Hooks
-		public override void _Draw()
-		{
-			DrawCircle(
-				position: Vector2.Zero,
-				radius: GunSize,
-				color: Color.Color8(0, 0, 255)
-			);
-		}
-
 		public override void _Process(float delta)
 		{
 			base._Process(delta);

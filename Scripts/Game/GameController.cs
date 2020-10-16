@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using SpinShooter.Enemies.Enemy;
+using SpinShooter.Enemies;
 using SpinShooter.Planet;
 
 namespace SpinShooter.Game
@@ -27,7 +27,7 @@ namespace SpinShooter.Game
 
 		#region Properties
 		private Random _random { get; set; }
-		private PackedScene _enemyScene { get; set; }
+		private PackedScene _basicEnemyScene { get; set; }
 		private PackedScene _mainMenuScene { get; set; }
 		private PlanetController _planetController { get; set; }
 		private float _accumulatedTime { get; set; }
@@ -42,10 +42,10 @@ namespace SpinShooter.Game
 				throw new Exception("Main Menu scene did not load correctly");
 			}
 			
-			_enemyScene = GD.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn");
-			if (_enemyScene == null)
+			_basicEnemyScene = GD.Load<PackedScene>("res://Scenes/Enemies/BasicEnemy.tscn");
+			if (_basicEnemyScene == null)
 			{
-				throw new Exception("Enemy scene did not load correctly");
+				throw new Exception("Basic Enemy scene did not load correctly");
 			}
 		}
 		
@@ -63,7 +63,7 @@ namespace SpinShooter.Game
 		
 		private void SpawnEnemy()
 		{
-			var enemy = _enemyScene.Instance() as EnemyController;
+			var enemy = _basicEnemyScene.Instance() as BasicEnemy;
 			AddChild(enemy);
 			
 			var origin = _planetController.GlobalPosition;

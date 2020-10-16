@@ -41,6 +41,7 @@ namespace SpinShooter.Planet.Guns
 		#region Protected
 
 		#region Member Methods
+		protected abstract void Draw();
 		protected virtual void LoadScenes() {}
 		#endregion
 
@@ -49,6 +50,9 @@ namespace SpinShooter.Planet.Guns
 		#region Godot Hooks
 		public override void _Draw()
 		{
+			base._Draw();
+
+			Draw();
 		}
 
 		public override void _Ready()
