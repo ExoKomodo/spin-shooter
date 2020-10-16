@@ -46,6 +46,8 @@ namespace SpinShooter.Enemies
 
 			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
 			Speed = 50f;
+			Score = 1;
+			Id = EnemyId.Basic;
 		}
 
 		public override void _Process(float delta)

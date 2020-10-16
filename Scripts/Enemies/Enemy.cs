@@ -1,4 +1,5 @@
 using Godot;
+using SpinShooter.Singletons;
 using System;
 
 namespace SpinShooter.Enemies
@@ -8,6 +9,8 @@ namespace SpinShooter.Enemies
 		#region Public
 		
 		#region Properties
+		public EnemyId Id { get; protected set; }
+		public UInt64 Score { get; protected set; }
 		public float Speed { get; set; }
 		#endregion
 		
@@ -35,8 +38,9 @@ namespace SpinShooter.Enemies
 		
 		protected abstract void Move(float delta);
 		
-		protected virtual void TakeDamage()
+		protected void TakeDamage()
 		{
+			StatTracker.AddKill(this);
 			QueueFree();
 		}
 		#endregion

@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 ViewportStretch="*res://Scripts/Singletons/viewport_stretch.gd"
+StatTracker="*res://Scripts/Singletons/StatTracker.cs"
 
 [display]
 

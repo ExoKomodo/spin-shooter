@@ -2,6 +2,7 @@ using Godot;
 using System;
 using SpinShooter.Enemies;
 using SpinShooter.Planet;
+using SpinShooter.Singletons;
 
 namespace SpinShooter.Game
 {
@@ -34,6 +35,11 @@ namespace SpinShooter.Game
 		#endregion
 		
 		#region Member Methods
+		private void EndRound()
+		{
+			StatTracker.EndRound();
+		}
+
 		private void LoadScenes()
 		{
 			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu.tscn");
@@ -72,6 +78,11 @@ namespace SpinShooter.Game
 			enemy.GlobalPosition = origin + offset;
 			enemy.Target(_planetController);
 		}
+
+		private void StartRound()
+		{
+			StatTracker.StartRound();
+		}
 		#endregion
 		
 		#endregion
@@ -82,7 +93,8 @@ namespace SpinShooter.Game
 			_random = new Random();
 			LoadScenes();
 			_planetController = GetNode<PlanetController>("Planet");
-			SpawnEnemies();
+
+			StartRound();
 		}
 
 		public override void _Input(InputEvent @event)
@@ -101,6 +113,17 @@ namespace SpinShooter.Game
 			
 			SpawnEnemies();
 		}
+
+		public override void _ExitTree()
+		{
+			base._ExitTree();
+
+			EndRound();
+		}
+		#endregion
+
+		#region Godot Signals
+		
 		#endregion
 
 		#region Godot Signals
