@@ -2,7 +2,7 @@ using Godot;
 
 namespace SpinShooter.Scripts.Planet
 {
-	public class BulletController : Node2D
+	public partial class BulletController : Node2D
 	{
 		#region Public
 
@@ -18,7 +18,7 @@ namespace SpinShooter.Scripts.Planet
 		private CollisionShape2D _collisionShape { get; set; }
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
 		private float _velocity { get; set; } = 100f;
-		private VisibilityNotifier2D _visibilityNotifier { get; set; }
+		private VisibleOnScreenNotifier2D _visibilityNotifier { get; set; }
 		#endregion
 
 		#region Member Methods
@@ -51,17 +51,18 @@ namespace SpinShooter.Scripts.Planet
 		public override void _Ready()
 		{
 			_collisionShape = GetNode<CollisionShape2D>("Body/CollisionShape2D");
-			_visibilityNotifier = GetNode<VisibilityNotifier2D>("VisibilityNotifier2D");
+			_visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
 		}
 
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
+			float dt = System.Convert.ToSingle(delta);
 			if (!_visibilityNotifier.IsOnScreen())
 			{
 				QueueFree();
 				return;
 			}
-			MoveBullet(delta);
+			MoveBullet(dt);
 		}
 		#endregion
 	}

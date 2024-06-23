@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SpinShooter.Scripts.Singletons
 {
-	public class Upgrades : Node
+	public partial class Upgrades : Node
 	{
 		#region Public
 
@@ -89,7 +89,7 @@ namespace SpinShooter.Scripts.Singletons
 		#endregion
 
 		#region Classes
-		public class Upgrade
+		public partial class Upgrade
 		{
 			#region Public
 			

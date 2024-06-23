@@ -3,7 +3,7 @@ using SpinShooter.Scripts.Game;
 
 namespace SpinShooter.Scripts.Planet.Guns
 {
-	public abstract class Gun : Node2D
+	public abstract partial class Gun : Node2D
 	{
 		#region Public
 
@@ -40,7 +40,7 @@ namespace SpinShooter.Scripts.Planet.Guns
 		#region Protected
 
 		#region Member Methods
-		protected abstract void Draw();
+		protected abstract new void Draw();
 		protected virtual void LoadScenes() {}
 		#endregion
 

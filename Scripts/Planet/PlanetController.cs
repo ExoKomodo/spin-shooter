@@ -7,7 +7,7 @@ using SpinShooter.Scripts.Singletons;
 
 namespace SpinShooter.Scripts.Planet
 {
-	public class PlanetController : Node2D
+	public partial class PlanetController : Node2D
 	{
 		#region Public
 
@@ -114,7 +114,7 @@ namespace SpinShooter.Scripts.Planet
 			var basicGunScene = BasicGun.GetScene();
 			for (float phi = 0; phi < Mathf.Tau; phi += gunStep)
 			{
-				var gun = basicGunScene.Instance() as BasicGun;
+				var gun = basicGunScene.Instantiate() as BasicGun;
 				gun.Initialize(_baseGunPosition, phi);
 				_guns.Add(gun);
 				AddChild(gun);
@@ -165,7 +165,7 @@ namespace SpinShooter.Scripts.Planet
 
 		private void TakeDamage()
 		{
-			GetTree().ChangeSceneTo(_mainMenuScene);
+			GetTree().ChangeSceneToPacked(_mainMenuScene);
 		}
 
 		private void UpdateGuns()
@@ -206,10 +206,11 @@ namespace SpinShooter.Scripts.Planet
 			GenerateGuns();
 		}
 
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
-			_elapsedShotTime += delta;
-			RotatePlanet(delta);
+			float dt = System.Convert.ToSingle(delta);
+			_elapsedShotTime += dt;
+			RotatePlanet(dt);
 			UpdateGuns();
 		}
 		#endregion
@@ -217,6 +218,7 @@ namespace SpinShooter.Scripts.Planet
 		#region Godot Signals
 		private void _on_Body_area_entered(object area)
 		{
+			GD.Print("taking damage");
 			TakeDamage();
 		}
 		#endregion

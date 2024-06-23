@@ -1,11 +1,11 @@
-﻿<Project Sdk="Godot.NET.Sdk/3.3.0">
+<Project Sdk="Godot.NET.Sdk/4.2.2">
   <PropertyGroup>
     <ProjectGuid>{A03A74C8-B544-48C4-92E1-DBC5372D861D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SpinShooter</RootNamespace>
     <AssemblyName>Spin Shooter</AssemblyName>
     <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <!--The following properties were overriden during migration to prevent errors.
     Enabling them may require other manual changes to the project and its files.-->
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>

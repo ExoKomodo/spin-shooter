@@ -4,7 +4,7 @@ using System;
 
 namespace SpinShooter.Scripts.UI.UpgradeMenu
 {
-	public class UpgradeMenuController : Control
+	public partial class UpgradeMenuController : Control
 	{
 		#region Private
 
@@ -88,7 +88,7 @@ namespace SpinShooter.Scripts.UI.UpgradeMenu
 			button.Disabled = !IsPurchaseable(upgrade);
 			
 			checkBox.Disabled = !upgrade.IsPurchased;
-			checkBox.Pressed = upgrade.IsEnabled;
+			checkBox.ButtonPressed = upgrade.IsEnabled;
 		}
 
 		private void UpdateScoreLabel()
@@ -106,7 +106,7 @@ namespace SpinShooter.Scripts.UI.UpgradeMenu
 			LoadUIReferences();
 		}
 		
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
 			UpdateUI();
 		}
@@ -115,7 +115,7 @@ namespace SpinShooter.Scripts.UI.UpgradeMenu
 		#region Godot Signals
 		private void _on_ExitButton_pressed()
 		{
-			GetTree().ChangeSceneTo(_mainMenuScene);
+			GetTree().ChangeSceneToPacked(_mainMenuScene);
 		}
 
 		// Two guns

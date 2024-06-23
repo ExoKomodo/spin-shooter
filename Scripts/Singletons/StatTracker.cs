@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SpinShooter.Scripts.Singletons
 {
-	public class StatTracker : Node
+	public partial class StatTracker : Node
 	{
 		#region Public
 

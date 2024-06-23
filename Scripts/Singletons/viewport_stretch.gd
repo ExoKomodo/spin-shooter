@@ -1,15 +1,15 @@
 extends Node
 
-onready var viewport = get_viewport()
+@onready var viewport = get_viewport()
 
 var minimum_size = Vector2(360, 640)
 
 func _ready():
-	viewport.connect('size_changed', self, 'window_resize')
+	viewport.connect('size_changed', Callable(self, 'window_resize'))
 	window_resize()
 
 func window_resize():
-	var current_size = OS.get_window_size()
+	var current_size = get_window().get_size()
 
 	var scale_factor = minimum_size.y / current_size.y
 	var new_size = Vector2(current_size.x * scale_factor, minimum_size.y)
@@ -21,4 +21,4 @@ func window_resize():
 		scale_factor = minimum_size.y / new_size.y
 		new_size = Vector2(new_size.x * scale_factor, minimum_size.y)
 
-	viewport.set_size_override(true, new_size)
+	viewport.set_size(new_size)

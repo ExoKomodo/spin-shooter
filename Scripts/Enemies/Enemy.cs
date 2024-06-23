@@ -3,7 +3,7 @@ using SpinShooter.Scripts.Singletons;
 
 namespace SpinShooter.Scripts.Enemies
 {
-	public abstract class Enemy : Node2D
+	public abstract partial class Enemy : Node2D
 	{
 		#region Public
 		
@@ -33,7 +33,7 @@ namespace SpinShooter.Scripts.Enemies
 		#endregion
 		
 		#region Member Methods
-		protected abstract void Draw();
+		protected abstract new void Draw();
 		
 		protected abstract void Move(float delta);
 		

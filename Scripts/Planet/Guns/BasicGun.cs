@@ -4,7 +4,7 @@ using System;
 
 namespace SpinShooter.Scripts.Planet.Guns
 {
-	public class BasicGun : Gun
+	public partial class BasicGun : Gun
 	{
 		#region Public
 
@@ -33,7 +33,7 @@ namespace SpinShooter.Scripts.Planet.Guns
 
 		public override void Shoot(GameController game, float baseRotation)
 		{
-			var bullet = _bulletScene.Instance() as BulletController;
+			var bullet = _bulletScene.Instantiate() as BulletController;
 			game.AddChild(bullet);
 
 			var muzzlePosition = CalculateMuzzlePosition(Phi + baseRotation);
@@ -85,8 +85,8 @@ namespace SpinShooter.Scripts.Planet.Guns
 		private Vector2 CalculateMuzzlePosition(float phi)
 		{
 			var muzzlePosition = BasePosition;
-			muzzlePosition.x += GunSize;
-			muzzlePosition.y = 0f;
+			muzzlePosition.X += GunSize;
+			muzzlePosition.Y = 0f;
 			return muzzlePosition.Rotated(phi);
 		}
 		#endregion
@@ -94,9 +94,10 @@ namespace SpinShooter.Scripts.Planet.Guns
 		#endregion
 
 		#region Godot Hooks
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
-			base._Process(delta);
+			float dt = System.Convert.ToSingle(delta);
+			base._Process(dt);
 
 			Position = CalculateGunPosition(Phi);
 		}
