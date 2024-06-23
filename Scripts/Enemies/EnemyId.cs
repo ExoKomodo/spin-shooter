@@ -1,7 +1,4 @@
-using Godot;
-using System;
-
-namespace SpinShooter.Enemies
+namespace SpinShooter.Scripts.Enemies
 {
     public enum EnemyId
     {

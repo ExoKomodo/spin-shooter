@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-namespace SpinShooter.UI.MainMenu
+namespace SpinShooter.Scripts.UI.MainMenu
 {
-	public class MainMenuController : Control
+	public partial class MainMenuController : Control
 	{
 		#region Private
 
@@ -46,12 +46,12 @@ namespace SpinShooter.UI.MainMenu
 
 		private void _on_StartButton_pressed()
 		{
-			GetTree().ChangeSceneTo(_gameScene);
+			GetTree().ChangeSceneToPacked(_gameScene);
 		}
 
 		private void _on_UpgradeButton_pressed()
 		{
-			GetTree().ChangeSceneTo(_upgradeMenuScene);
+			GetTree().ChangeSceneToPacked(_upgradeMenuScene);
 		}
 		#endregion
 	}

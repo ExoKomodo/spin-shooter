@@ -1,9 +1,8 @@
 using Godot;
-using System;
 
-namespace SpinShooter.Enemies
+namespace SpinShooter.Scripts.Enemies
 {
-	public class BasicEnemy : Enemy
+	public partial class BasicEnemy : Enemy
 	{
 		#region Protected
 
@@ -13,9 +12,9 @@ namespace SpinShooter.Enemies
 			// Enemy body
 			DrawRect(
 				new Rect2(
-					position: -_rectangleShape.Extents,
+					position: -_rectangleShape.Size / 2f,
 					// Extents on shape are half extents
-					size: _rectangleShape.Extents * 2f
+					size: _rectangleShape.Size
 				),
 				Color.Color8(255, 0, 255),
 				filled: true
@@ -50,11 +49,12 @@ namespace SpinShooter.Enemies
 			Id = EnemyId.Basic;
 		}
 
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
-			base._Process(delta);
+			float dt = System.Convert.ToSingle(delta);
+			base._Process(dt);
 
-			Move(delta);
+			Move(dt);
 		}
 		#endregion
 

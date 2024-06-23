@@ -1,12 +1,13 @@
 using Godot;
 using System;
-using SpinShooter.Enemies;
-using SpinShooter.Planet;
-using SpinShooter.Singletons;
+using SpinShooter.Scripts.Enemies;
+using SpinShooter.Scripts.Planet;
+using SpinShooter.Scripts.Singletons;
+using System.Diagnostics;
 
-namespace SpinShooter.Game
+namespace SpinShooter.Scripts.Game
 {
-	public class GameController : Control
+	public partial class GameController : Control
 	{
 		#region Public
 
@@ -69,7 +70,7 @@ namespace SpinShooter.Game
 		
 		private void SpawnEnemy()
 		{
-			var enemy = _basicEnemyScene.Instance() as BasicEnemy;
+			var enemy = _basicEnemyScene.Instantiate() as BasicEnemy;
 			AddChild(enemy);
 			
 			var origin = _planetController.GlobalPosition;
@@ -82,6 +83,11 @@ namespace SpinShooter.Game
 		private void StartRound()
 		{
 			StatTracker.StartRound();
+		}
+
+		public void ReverseRotation()
+		{
+			_planetController.RotationSpeed *= -1f;
 		}
 		#endregion
 		
@@ -100,16 +106,16 @@ namespace SpinShooter.Game
 		public override void _Input(InputEvent @event)
 		{
 			base._UnhandledInput(@event);
-
-			if (@event is InputEventScreenTouch touch && touch.Pressed)
+			if (@event.IsActionPressed(GAME_SHOOT))
 			{
 				_planetController?.Shoot(this);
 			}
 		}
 		
-		public override void _Process(float delta)
+		public override void _Process(double delta)
 		{
-			_accumulatedTime += delta;
+			float dt = System.Convert.ToSingle(delta);
+			_accumulatedTime += dt;
 			
 			SpawnEnemies();
 		}
@@ -129,12 +135,12 @@ namespace SpinShooter.Game
 		#region Godot Signals
 		private void _on_ChangeSpinButton_pressed()
 		{
-			_planetController.RotationSpeed *= -1f;
+			ReverseRotation();
 		}
 
 		private void _on_ExitButton_pressed()
 		{
-			GetTree().ChangeSceneTo(_mainMenuScene);
+			GetTree().ChangeSceneToPacked(_mainMenuScene);
 		}
 		#endregion
 	}

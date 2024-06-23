@@ -1,16 +1,15 @@
 using Godot;
-using SpinShooter.Singletons;
-using System;
+using SpinShooter.Scripts.Singletons;
 
-namespace SpinShooter.Enemies
+namespace SpinShooter.Scripts.Enemies
 {
-	public abstract class Enemy : Node2D
+	public abstract partial class Enemy : Node2D
 	{
 		#region Public
 		
 		#region Properties
 		public EnemyId Id { get; protected set; }
-		public UInt64 Score { get; protected set; }
+		public ulong Score { get; protected set; }
 		public float Speed { get; set; }
 		#endregion
 		
@@ -34,7 +33,7 @@ namespace SpinShooter.Enemies
 		#endregion
 		
 		#region Member Methods
-		protected abstract void Draw();
+		protected abstract new void Draw();
 		
 		protected abstract void Move(float delta);
 		
@@ -54,10 +53,6 @@ namespace SpinShooter.Enemies
 
 			Draw();
 		}
-
-		public override void _Ready() {}
-
-		public override void _Process(float delta) {}
 		#endregion
 	}
 }
