@@ -1,8 +1,8 @@
 using Godot;
-using SpinShooter.Game;
+using SpinShooter.Scripts.Game;
 using System;
 
-namespace SpinShooter.Planet.Guns
+namespace SpinShooter.Scripts.Planet.Guns
 {
 	public class BasicGun : Gun
 	{
@@ -71,7 +71,7 @@ namespace SpinShooter.Planet.Guns
 		#endregion
 
 		#region Private
-		
+
 		#region Properties
 		private PackedScene _bulletScene { get; set; }
 		#endregion

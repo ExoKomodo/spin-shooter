@@ -1,8 +1,7 @@
 using Godot;
-using SpinShooter.Singletons;
-using System;
+using SpinShooter.Scripts.Singletons;
 
-namespace SpinShooter.Enemies
+namespace SpinShooter.Scripts.Enemies
 {
 	public abstract class Enemy : Node2D
 	{
@@ -10,7 +9,7 @@ namespace SpinShooter.Enemies
 		
 		#region Properties
 		public EnemyId Id { get; protected set; }
-		public UInt64 Score { get; protected set; }
+		public ulong Score { get; protected set; }
 		public float Speed { get; set; }
 		#endregion
 		
@@ -54,10 +53,6 @@ namespace SpinShooter.Enemies
 
 			Draw();
 		}
-
-		public override void _Ready() {}
-
-		public override void _Process(float delta) {}
 		#endregion
 	}
 }

@@ -1,10 +1,10 @@
 using Godot;
 using System;
-using SpinShooter.Enemies;
+using SpinShooter.Scripts.Enemies;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpinShooter.Singletons
+namespace SpinShooter.Scripts.Singletons
 {
 	public class StatTracker : Node
 	{
@@ -45,7 +45,7 @@ namespace SpinShooter.Singletons
 		public static void EndRound()
 		{
 			CollateScores();
-			// TODO: GooglePlay.Persist();
+			// TODO: Persist to storage
 			ResetRound();
 
 			GD.Print(TotalScore);
@@ -54,7 +54,7 @@ namespace SpinShooter.Singletons
 
 		public static void Initialize()
 		{
-			// TODO: Load from Google Play
+			// TODO: Load from persistent storage
 		}
 
 		public static void StartRound()

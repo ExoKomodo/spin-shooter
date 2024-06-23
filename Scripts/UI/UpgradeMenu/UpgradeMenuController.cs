@@ -1,8 +1,8 @@
 using Godot;
-using SpinShooter.Singletons;
+using SpinShooter.Scripts.Singletons;
 using System;
 
-namespace SpinShooter.UI.UpgradeMenu
+namespace SpinShooter.Scripts.UI.UpgradeMenu
 {
 	public class UpgradeMenuController : Control
 	{

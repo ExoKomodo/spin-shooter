@@ -1,8 +1,7 @@
 using Godot;
-using SpinShooter.Game;
-using System;
+using SpinShooter.Scripts.Game;
 
-namespace SpinShooter.Planet.Guns
+namespace SpinShooter.Scripts.Planet.Guns
 {
 	public abstract class Gun : Node2D
 	{
@@ -55,9 +54,7 @@ namespace SpinShooter.Planet.Guns
 			Draw();
 		}
 
-		public override void _Ready()
-		{
-		}
+		public override void _Ready() {}
 		#endregion
 	}
 }

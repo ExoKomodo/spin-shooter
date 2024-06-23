@@ -1,10 +1,10 @@
 using Godot;
 using System;
-using SpinShooter.Enemies;
-using SpinShooter.Planet;
-using SpinShooter.Singletons;
+using SpinShooter.Scripts.Enemies;
+using SpinShooter.Scripts.Planet;
+using SpinShooter.Scripts.Singletons;
 
-namespace SpinShooter.Game
+namespace SpinShooter.Scripts.Game
 {
 	public class GameController : Control
 	{
@@ -83,6 +83,11 @@ namespace SpinShooter.Game
 		{
 			StatTracker.StartRound();
 		}
+
+		public void ReverseRotation()
+		{
+			_planetController.RotationSpeed *= -1f;
+		}
 		#endregion
 		
 		#endregion
@@ -129,7 +134,7 @@ namespace SpinShooter.Game
 		#region Godot Signals
 		private void _on_ChangeSpinButton_pressed()
 		{
-			_planetController.RotationSpeed *= -1f;
+			ReverseRotation();
 		}
 
 		private void _on_ExitButton_pressed()

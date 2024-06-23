@@ -1,10 +1,10 @@
 using Godot;
 using System;
-using SpinShooter.Enemies;
+using SpinShooter.Scripts.Enemies;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpinShooter.Singletons
+namespace SpinShooter.Scripts.Singletons
 {
 	public class Upgrades : Node
 	{
@@ -39,7 +39,7 @@ namespace SpinShooter.Singletons
 
 		public static void Initialize()
 		{
-			// TODO: Load from Google Play
+			// TODO: Load from persistent storage
 			TwoGuns = Upgrade.GetById(UpgradeId.TWO_GUNS);
 			LoadUpgradeState(TwoGuns);
 			
@@ -61,7 +61,7 @@ namespace SpinShooter.Singletons
 			{
 				upgrade.IsPurchased = true;
 				upgrade.IsEnabled = true;
-				// TODO: GooglePlay.Persist();
+				// TODO: Save to persistent storage
 			}
 		}
 		#endregion
@@ -73,7 +73,7 @@ namespace SpinShooter.Singletons
 		#region Static Methods
 		private static void LoadUpgradeState(Upgrade upgrade)
 		{
-			// TODO: Loads whether or not upgrade is purchased and enabled from the Play Store
+			// TODO: Loads whether or not upgrade is purchased and enabled from some persistent storage
 		}
 		#endregion
 

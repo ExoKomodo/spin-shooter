@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace SpinShooter.UI.MainMenu
+namespace SpinShooter.Scripts.UI.MainMenu
 {
 	public class MainMenuController : Control
 	{

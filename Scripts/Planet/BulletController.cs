@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-namespace SpinShooter.Planet
+namespace SpinShooter.Scripts.Planet
 {
 	public class BulletController : Node2D
 	{

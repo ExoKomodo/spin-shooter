@@ -1,11 +1,11 @@
 using Godot;
 using System;
-using SpinShooter.Game;
-using SpinShooter.Planet.Guns;
+using SpinShooter.Scripts.Game;
+using SpinShooter.Scripts.Planet.Guns;
 using System.Collections.Generic;
-using SpinShooter.Singletons;
+using SpinShooter.Scripts.Singletons;
 
-namespace SpinShooter.Planet
+namespace SpinShooter.Scripts.Planet
 {
 	public class PlanetController : Node2D
 	{
@@ -28,8 +28,6 @@ namespace SpinShooter.Planet
 				_fireDelay = Mathf.Max(MIN_FIRE_DELAY, value);
 			}
 		}
-		[Export]
-		public float GunSize = 5f;
 		[Export]
 		public int NumberOfGuns
 		{
@@ -75,7 +73,7 @@ namespace SpinShooter.Planet
 		#region Private
 
 		#region Fields
-		private IList<Gun> _guns = new List<Gun>();
+		private readonly IList<Gun> _guns = new List<Gun>();
 		private float _elapsedShotTime = 0f;
 		private float _fireDelay = MIN_FIRE_DELAY;
 		private int _numberOfGuns = 1;
@@ -86,18 +84,7 @@ namespace SpinShooter.Planet
 		private Vector2 _baseGunPosition => new Vector2(_circleShape.Radius, 0f);
 		private CollisionShape2D _collisionShape { get; set; }
 		private CircleShape2D _circleShape => _collisionShape?.Shape as CircleShape2D;
-		public float _gunStep => NumberOfGuns == 0 ? Mathf.Tau : Mathf.Tau / NumberOfGuns;
 		private PackedScene _mainMenuScene { get; set; }
-		private Vector2 _muzzlePosition
-		{
-			get
-			{
-				var muzzlePosition = _baseGunPosition;
-				muzzlePosition.x += GunSize;
-				muzzlePosition.y = 0f;
-				return muzzlePosition.Rotated(Rotation);
-			}
-		}
 		#endregion
 
 		#region Member Methods
@@ -123,8 +110,9 @@ namespace SpinShooter.Planet
 			}
 			_guns.Clear();
 
+			var gunStep = NumberOfGuns == 0 ? Mathf.Tau : Mathf.Tau / NumberOfGuns;
 			var basicGunScene = BasicGun.GetScene();
-			for (float phi = 0; phi < Mathf.Tau; phi += _gunStep)
+			for (float phi = 0; phi < Mathf.Tau; phi += gunStep)
 			{
 				var gun = basicGunScene.Instance() as BasicGun;
 				gun.Initialize(_baseGunPosition, phi);
@@ -141,6 +129,7 @@ namespace SpinShooter.Planet
 		private void LoadNumberOfGuns()
 		{
 			NumberOfGuns = MIN_NUMBER_OF_GUNS;
+			// NOTE: This is wildly ugly. Consider a map of attributes that get set programmatically
 			if (IsUpgradeActive(Upgrades.TwoGuns))
 			{
 				NumberOfGuns = 2;
