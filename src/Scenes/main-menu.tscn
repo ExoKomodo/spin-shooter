@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl7hy5rbynwuq"]
+
+[ext_resource type="Texture2D" uid="uid://dgsxwso0382me" path="res://Textures/space-background.jpg" id="1_bfl6q"]
+[ext_resource type="Theme" uid="uid://bsi4lhbv1xjmv" path="res://Themes/ui_theme.tres" id="2_bnc2w"]
+[ext_resource type="Script" path="res://Scripts/main-menu/play-button.gd" id="2_x1kfq"]
+[ext_resource type="Script" path="res://Scripts/main-menu/exit-button.gd" id="3_u5k2r"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 960.0
+texture = ExtResource("1_bfl6q")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 960.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MenuContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 250
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/MenuContainer"]
+layout_mode = 2
+theme = ExtResource("2_bnc2w")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center][color=deadbeef]Spin Shooter[/color][/center]"
+fit_content = true
+scroll_active = false
+
+[node name="UIContainer" type="VBoxContainer" parent="MarginContainer/MenuContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Play" type="Button" parent="MarginContainer/MenuContainer/UIContainer"]
+layout_mode = 2
+theme = ExtResource("2_bnc2w")
+theme_override_font_sizes/font_size = 40
+text = "Play"
+script = ExtResource("2_x1kfq")
+
+[node name="Shop" type="Button" parent="MarginContainer/MenuContainer/UIContainer"]
+layout_mode = 2
+theme = ExtResource("2_bnc2w")
+theme_override_font_sizes/font_size = 40
+text = "Shop"
+
+[node name="Settings" type="Button" parent="MarginContainer/MenuContainer/UIContainer"]
+layout_mode = 2
+theme = ExtResource("2_bnc2w")
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+
+[node name="Exit" type="Button" parent="MarginContainer/MenuContainer/UIContainer"]
+layout_mode = 2
+theme = ExtResource("2_bnc2w")
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+script = ExtResource("3_u5k2r")
+
+[connection signal="pressed" from="MarginContainer/MenuContainer/UIContainer/Play" to="MarginContainer/MenuContainer/UIContainer/Play" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/MenuContainer/UIContainer/Exit" to="MarginContainer/MenuContainer/UIContainer/Exit" method="_on_pressed"]

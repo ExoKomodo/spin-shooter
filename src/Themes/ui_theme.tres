@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bsi4lhbv1xjmv"]
+
+[ext_resource type="FontFile" uid="uid://cjfsk0t4elhgp" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="1_blcv2"]
+[ext_resource type="StyleBox" uid="uid://s2864yv3vobo" path="res://Themes/StyleBoxes/button-style-normal.tres" id="1_etu4w"]
+
+[resource]
+default_font = ExtResource("1_blcv2")
+default_font_size = 40
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/styles/normal = ExtResource("1_etu4w")
